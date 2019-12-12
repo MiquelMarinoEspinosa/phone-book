@@ -8,12 +8,12 @@ Vagrant.configure("2") do |config|
             vb.memory = "1024"
     end
 
+    config.vm.synced_folder '.', '/var/deployments/phone-book/releases/1', type: 'nfs'
+
     config.vm.provision "ansible" do |ansible|
         ansible.extra_vars = {
           hostname: "phone-book"
         }
         ansible.playbook = "etc/devel/vagrant/provision/ansible/playbooks/playbook.yml"
     end
-
-    config.vm.synced_folder '.', '/var/deployments/phone-book/releases/1', type: 'nfs'
 end
