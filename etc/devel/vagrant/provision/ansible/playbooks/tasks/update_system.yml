@@ -3,11 +3,33 @@
   hosts: phone-book
   become: true
   tasks:
-    - name: APT | Ensure system is updated
-      apt: upgrade=dist update_cache=yes
-
     - name: APT | Ensure base packages are installed
-      apt: name=apt-transport-https,vim state=latest
+      apt: name=apt-transport-https,vim,curl,gnupg2,ca-certificates,lsb-release state=latest
+
+    # The next as followed to configure the repository
+    # https://www.itzgeek.com/how-tos/linux/debian/how-to-install-php-7-3-7-2-7-1-on-debian-10-debian-9-debian-8.html
+    - name: APT | Retrieve the public key
+      get_url:
+        url: https://packages.sury.org/php/apt.gpg
+        dest: /etc/apt
+
+    - name: APT | Add the public key
+      shell:
+        cmd: apt-key add apt.gpg
+
+    - name: APT | Add sury to the repository
+      shell:
+        cmd: echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php7.list
+
+    - name: APT | Ensure system is up to date
+      apt: upgrade=dist update_cache=yes force=yes
+
+    - name: ENVIRONMENT | Create the source code directory
+      file:
+        path: /var/deployments/phone-book/releases/1
+        state: directory
+        mode: '0755'
 
     - name: ENVIRONMENT | Ensure when ssh machine go to app folder
-      shell: echo 'cd /var/deployments/phone-book/releases/1' > .bash_profile
+      shell:
+        cmd: echo 'cd /var/deployments/phone-book/releases/1' > .bash_profile
