@@ -6,6 +6,9 @@
     - name: PHP | Install php fpm
       apt: name=php7.4-fpm state=latest force=yes
 
+    - name: PHP | Install php phalcon
+      apt: name=php-phalcon state=latest force=yes
+
     - name: PHP | Copy php.ini configuration
       copy:
         src: ../../templates/php/fpm/php.ini
