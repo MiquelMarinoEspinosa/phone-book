@@ -15,7 +15,7 @@
 
     - name: APT | Add the public key
       shell:
-        cmd: apt-key add apt.gpg
+        cmd: apt-key add /etc/apt/apt.gpg
 
     - name: APT | Add sury to the repository
       shell:
