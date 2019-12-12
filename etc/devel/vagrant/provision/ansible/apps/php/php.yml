@@ -1,0 +1,6 @@
+---
+- name: PHP
+  hosts: phone-book
+  tasks:
+    - name: PHP | Install php fpm
+      apt: name=php7.4-fpm state=latest

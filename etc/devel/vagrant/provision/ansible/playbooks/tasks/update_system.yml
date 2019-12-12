@@ -1,0 +1,13 @@
+---
+- name: Provision
+  hosts: phone-book
+  become: true
+  tasks:
+    - name: APT | Ensure system is updated
+      apt: upgrade=dist update_cache=yes
+
+    - name: APT | Ensure base packages are installed
+      apt: name=apt-transport-https,vim state=latest
+
+    - name: ENVIRONMENT | Ensure when ssh machine go to app folder
+      shell: echo 'cd /var/deployments/phone-book/releases/1' > .bash_profile
