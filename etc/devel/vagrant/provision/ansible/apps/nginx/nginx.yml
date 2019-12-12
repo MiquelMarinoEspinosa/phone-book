@@ -1,0 +1,31 @@
+---
+- name: NGINX
+  hosts: phone-book
+  become: true
+  tasks:
+    - name: NGINX | Install nginx
+      apt: name=nginx state=latest force=yes
+
+    - name: NGINX | Copy ssl server.crt
+      copy:
+        src: ../../templates/nginx/server.crt
+        dest: /etc/nginx
+
+    - name: NGINX | Copy ssl server.key
+      copy:
+        src: ../../templates/nginx/server.key
+        dest: /etc/nginx
+
+    - name: NGINX | Copy nginx.conf configuration
+      copy:
+        src: ../../templates/nginx/nginx.conf
+        dest: /etc/nginx
+
+    - name: NGINX | Copy sites enabled configuration
+      copy:
+        src: ../../templates/nginx/sites-enabled/phone-book.conf
+        dest: /etc/nginx/sites-enabled
+
+    - name: NGINX | Restart nginx service
+      shell:
+        cmd: /etc/init.d/nginx restart

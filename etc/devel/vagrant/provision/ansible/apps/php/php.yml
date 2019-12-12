@@ -4,7 +4,7 @@
   become: true
   tasks:
     - name: PHP | Install php fpm
-      apt: name=php7.4-fpm state=latest
+      apt: name=php7.4-fpm state=latest force=yes
 
     - name: PHP | Copy php.ini configuration
       copy:
@@ -16,6 +16,11 @@
         src: ../../templates/php/fpm/php-fpm.conf
         dest: /etc/php/7.4/fpm
 
-    - name: PHP | Start php fpm service
+    - name: PHP | Copy php-fpm.conf configuration
+      copy:
+        src: ../../templates/php/fpm/pool.d/www.conf
+        dest: /etc/php/7.4/fpm/pool.d
+
+    - name: PHP | Restart php fpm service
       shell:
-        cmd: /etc/init.d/php7.4-fpm start
+        cmd: /etc/init.d/php7.4-fpm restart
