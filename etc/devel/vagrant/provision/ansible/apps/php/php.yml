@@ -9,6 +9,9 @@
     - name: PHP | Install php phalcon
       apt: name=php-phalcon state=latest force=yes
 
+    - name: PHP | Install mysql client module
+      apt: name=php7.3-mysql state=latest force=yes
+
     - name: PHP | Copy php-fpm php.ini configuration
       copy:
         src: ../../templates/php/fpm/php.ini
