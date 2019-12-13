@@ -1,5 +1,6 @@
 <?php
 
+use HostAway\Controllers\PhoneBookController;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Loader;
@@ -7,10 +8,10 @@ use Phalcon\Mvc\Micro;
 use Phalcon\Mvc\Micro\Collection;
 
 $loader = new Loader();
-$loader->registerDirs(
+$loader->registerNamespaces(
     [
-        "../apps/controllers/",
-        "../apps/models/",
+        'HostAway\Controllers' => "../apps/controllers/",
+        'HostAway\Models'   => "../apps/models/"
     ]
 );
 $loader->register();
