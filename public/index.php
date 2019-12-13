@@ -1,12 +1,10 @@
 <?php
 
+use Phalcon\Db\Adapter\Pdo\Mysql;
+use Phalcon\Di\FactoryDefault;
 use Phalcon\Loader;
 use Phalcon\Mvc\Micro;
-use Phalcon\Mvc\Router;
-
-$app = new Micro();
-
-$router = new Router();
+use Phalcon\Mvc\Micro\Collection;
 
 $loader = new Loader();
 $loader->registerDirs(
@@ -17,12 +15,30 @@ $loader->registerDirs(
 );
 $loader->register();
 
-//$app->setService('router', $router, true);
+$container = new FactoryDefault();
 
-$app->get(
-    '/test',
-    'PhoneBookController::get'
+$container->set(
+    'db',
+    function () {
+        return new Mysql(
+            [
+                'host'     => 'localhost',
+                'username' => 'hostaway',
+                'password' => 'hostaway',
+                'dbname'   => 'hostaway',
+            ]
+        );
+    }
 );
+
+
+$app = new Micro();
+$app->setDI($container);
+
+$phoneBook = new Collection();
+$phoneBook->setHandler(new PhoneBookController());
+$phoneBook->get('/phone-book', 'getAction');
+$app->mount($phoneBook);
 
 try {
     $app->handle();

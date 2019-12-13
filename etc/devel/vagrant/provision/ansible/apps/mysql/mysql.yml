@@ -14,7 +14,7 @@
       shell:
         cmd: sudo mysql -u root -ptoor -e "GRANT ALL PRIVILEGES ON *.* TO 'hostaway'@'localhost' IDENTIFIED BY 'hostaway'"
 
-    - name: MYSQL | Copy phone-book sql script to create tables and data bases
+    - name: MYSQL | Copy phone-book sql script to create database and tables
       copy:
         src: ../../templates/mysql/phone-book.sql
         dest: /usr/local/etc/

@@ -4,7 +4,9 @@ use Phalcon\Mvc\Controller;
 
 class PhoneBookController extends Controller
 {
-    public static function get() {
+    public function getAction() {
+        $db = $this->getDI()->get('db');
+        var_dump($db);
         echo "PhoneBookController";
     }
 }
