@@ -2,6 +2,7 @@
 
 namespace HostAway\Models;
 
+use HostAway\Services\CountryService;
 use Phalcon\Mvc\Model;
 
 class PhoneBook extends Model
@@ -46,6 +47,46 @@ class PhoneBook extends Model
      */
     protected $updatedOn;
 
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    public function getPhoneNumber(): string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function getCountryCode(): string
+    {
+        return $this->countryCode;
+    }
+
+    public function getTimeZone(): string
+    {
+        return $this->timeZone;
+    }
+
+    public function getInsertedOn(): string
+    {
+        return $this->insertedOn;
+    }
+
+    public function getUpdatedOn(): string
+    {
+        return $this->updatedOn;
+    }
+
     public function setId(string $id): void
     {
         $this->id = $id;
@@ -68,6 +109,16 @@ class PhoneBook extends Model
 
     public function setCountryCode(string $countryCode): void
     {
+        /** @var CountryService $countryService */
+        $countryService = $this->getDI()->get('country_service');
+        $countyCodes = $countryService->getCountryCodes();
+        var_dump($countyCodes);
+        if (!in_array($countryCode, $countyCodes)) {
+            throw new \InvalidArgumentException(
+                'The country_code ' . $countryCode . ' does not exist.'
+                . ' Please check the ' . CountryService::COUNTRIES_URL . ' to see which countries are valid'
+            );
+        }
         $this->countryCode = $countryCode;
     }
 

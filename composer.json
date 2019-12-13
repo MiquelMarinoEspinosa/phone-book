@@ -1,5 +1,6 @@
 {
     "require": {
-        "ramsey/uuid": "^3.9"
+        "ramsey/uuid": "^3.9",
+        "guzzlehttp/guzzle": "^6.5"
     }
 }

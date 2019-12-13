@@ -1,6 +1,8 @@
 <?php
 
+use GuzzleHttp\Client;
 use HostAway\Controllers\PhoneBookController;
+use HostAway\Services\CountryService;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Loader;
@@ -11,7 +13,8 @@ $loader = new Loader();
 $loader->registerNamespaces(
     [
         'HostAway\Controllers' => "../apps/controllers/",
-        'HostAway\Models'   => "../apps/models/"
+        'HostAway\Models'   => "../apps/models/",
+        'HostAway\Services' => "../apps/services/"
     ]
 );
 $loader->registerFiles(['../vendor/autoload.php']);
@@ -33,6 +36,14 @@ $container->set(
     }
 );
 
+$container->set(
+    'country_service',
+    function () {
+        return new CountryService(
+            new Client()
+        );
+    }
+);
 
 $app = new Micro();
 $app->setDI($container);
