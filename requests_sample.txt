@@ -1,0 +1,1 @@
+curl -k -X POST https://172.21.99.4/phone-book -d '{"first_name":"miquel", "last_name":"marino", "phone_number":"3333333", "country_code":"ES", "time_zone":"time_zone"}' -H "Content-Type: application/json"

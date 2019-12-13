@@ -6,13 +6,9 @@
     - name: MYSQL | Install mysql server
       apt: name=mysql-server state=latest force=yes
 
-    - name: MYSQL | Change root user password
-      shell:
-        cmd: mysql -e "FLUSH PRIVILEGES;SET PASSWORD FOR 'root'@'localhost' = PASSWORD('toor');"
-
     - name: MYSQL | Create hostaway user
       shell:
-        cmd: mysql -u root -ptoor -e "GRANT ALL PRIVILEGES ON *.* TO 'hostaway'@'localhost' IDENTIFIED BY 'hostaway'"
+        cmd: mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'hostaway'@'localhost' IDENTIFIED BY 'hostaway'"
 
     - name: MYSQL | Copy phone-book sql script to create database and tables
       copy:

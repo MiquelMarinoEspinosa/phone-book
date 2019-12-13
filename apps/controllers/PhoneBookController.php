@@ -4,11 +4,11 @@ namespace HostAway\Controllers;
 
 use HostAway\Models\PhoneBook;
 use Phalcon\Mvc\Controller;
+use Ramsey\Uuid\Uuid;
 
 class PhoneBookController extends Controller
 {
     public function getAction() {
-        $db = $this->getDI()->get('db');
         $phoneBook = PhoneBook::find();
         var_dump(count($phoneBook->toArray()));
         var_dump($phoneBook->toArray());
@@ -16,17 +16,17 @@ class PhoneBookController extends Controller
 
     public function postAction()
     {
-        //var_dump($this->request->getJsonRawBody(true));
         $phoneBook = new PhoneBook();
-
-        $phoneBook->setId('test-124232');
-        $phoneBook->setFirstName('miquel2');
-        $phoneBook->setLastName('marino23');
-        $phoneBook->setPhoneNumber('4334334');
-        $phoneBook->setCountryCode('ES');
-        $phoneBook->setTimeZone('timezone3');
-        $phoneBook->setInsertedOn('2019-03-23');
-        $phoneBook->setUpdatedOn('2019-03-24');
+        $data = $this->request->getJsonRawBody(true);
+        $phoneBook->setId(Uuid::uuid4());
+        $phoneBook->setFirstName($data['first_name'] ?? '');
+        $phoneBook->setLastName($data['last_name'] ?? '');
+        $phoneBook->setPhoneNumber($data['phone_number'] ?? '');
+        $phoneBook->setCountryCode($data['country_code'] ?? '');
+        $phoneBook->setTimeZone($data['time_zone'] ?? '');
+        $now = date("Y-m-d H:i:s");
+        $phoneBook->setInsertedOn($now);
+        $phoneBook->setUpdatedOn($now);
         $result = $phoneBook->create();
         var_dump($result);
         var_dump($phoneBook->getMessages());

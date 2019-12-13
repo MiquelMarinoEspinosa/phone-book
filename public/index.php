@@ -14,6 +14,7 @@ $loader->registerNamespaces(
         'HostAway\Models'   => "../apps/models/"
     ]
 );
+$loader->registerFiles(['../vendor/autoload.php']);
 $loader->register();
 
 $container = new FactoryDefault();

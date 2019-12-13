@@ -4,7 +4,7 @@
   become: true
   tasks:
     - name: APT | Ensure base packages are installed
-      apt: name=apt-transport-https,vim,curl,gnupg2,ca-certificates,lsb-release state=latest
+      apt: name=apt-transport-https,vim,curl,gnupg2,ca-certificates,lsb-release,git,unzip state=latest
 
     # The next as followed to configure the repository
     # https://www.itzgeek.com/how-tos/linux/debian/how-to-install-php-7-3-7-2-7-1-on-debian-10-debian-9-debian-8.html
