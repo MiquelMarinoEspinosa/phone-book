@@ -1,14 +1,15 @@
-CREATE DATABASE hostaway;
+CREATE DATABASE IF NOT EXISTS hostaway;
 
 USE hostaway;
 
-CREATE TABLE phone_book (
+CREATE TABLE IF NOT EXISTS phone_book (
     id varchar(255),
-    first_name varchar(255) NOT NULL,
-    last_name varchar(255),
-    phone_number varchar(100) NOT NULL,
-    country_code char(2),
-    time_zone varchar(100),
-    inserted_on DATE NOT NULL,
-    updated_on DATE NOT NULL
+    firstName varchar(255) NOT NULL,
+    lastName varchar(255),
+    phoneNumber varchar(100) NOT NULL,
+    countryNode char(2),
+    timeZone varchar(100),
+    insertedOn DATE NOT NULL,
+    updatedOn DATE NOT NULL,
+    PRIMARY KEY (id)
 );

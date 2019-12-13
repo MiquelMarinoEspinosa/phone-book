@@ -8,11 +8,11 @@
 
     - name: MYSQL | Change root user password
       shell:
-        cmd: sudo mysql -e "FLUSH PRIVILEGES;SET PASSWORD FOR 'root'@'localhost' = PASSWORD('toor');"
+        cmd: mysql -e "FLUSH PRIVILEGES;SET PASSWORD FOR 'root'@'localhost' = PASSWORD('toor');"
 
     - name: MYSQL | Create hostaway user
       shell:
-        cmd: sudo mysql -u root -ptoor -e "GRANT ALL PRIVILEGES ON *.* TO 'hostaway'@'localhost' IDENTIFIED BY 'hostaway'"
+        cmd: mysql -u root -ptoor -e "GRANT ALL PRIVILEGES ON *.* TO 'hostaway'@'localhost' IDENTIFIED BY 'hostaway'"
 
     - name: MYSQL | Copy phone-book sql script to create database and tables
       copy:
@@ -20,5 +20,5 @@
         dest: /usr/local/etc/
 
     - name: MYSQL | Create hostaway data base and phone-book table
-        shell:
-          cmd: sudo mysql -u hostaway -phostaway < /usr/local/etc/phone-book.sql
+      shell:
+        cmd: mysql -u hostaway -phostaway < /usr/local/etc/phone-book.sql

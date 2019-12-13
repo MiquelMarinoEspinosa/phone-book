@@ -39,6 +39,7 @@ $app->setDI($container);
 $phoneBook = new Collection();
 $phoneBook->setHandler(new PhoneBookController());
 $phoneBook->get('/phone-book', 'getAction');
+$phoneBook->post('/phone-book', 'postAction');
 $app->mount($phoneBook);
 
 try {
