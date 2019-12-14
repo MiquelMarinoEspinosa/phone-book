@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS phone_book (
     phoneNumber varchar(100) NOT NULL,
     countryCode char(2) NOT NULL,
     timeZone varchar(100) NOT NULL,
-    insertedOn DATE NOT NULL,
-    updatedOn DATE NOT NULL,
+    insertedOn DATETIME NOT NULL,
+    updatedOn DATETIME NOT NULL,
     PRIMARY KEY (id)
 );
