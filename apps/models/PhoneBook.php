@@ -58,7 +58,7 @@ class PhoneBook extends Model
         return $this->firstName;
     }
 
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
@@ -127,7 +127,6 @@ class PhoneBook extends Model
         /** @var TimeZoneService $timeZonesService */
         $timeZonesService = $this->getDI()->get('time_zones_service');
         $timeZones = $timeZonesService->getTimeZones();
-        var_dump($timeZones);
         if (!in_array($timeZone, $timeZones)) {
             throw new \InvalidArgumentException(
                 'The time_zone ' . $timeZone . ' does not exist.'
