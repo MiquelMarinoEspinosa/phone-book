@@ -65,7 +65,8 @@ function buildContainer(): FactoryDefault {
 function createRoutes(): Collection {
     $phoneBook = new Collection();
     $phoneBook->setHandler(new PhoneBookController());
-    $phoneBook->get('/phone-book', 'getAction');
+    $phoneBook->get('/phone-book', 'findAction');
+    $phoneBook->get('/phone-book/{id}', 'getAction');
     $phoneBook->post('/phone-book', 'postAction');
 
     return $phoneBook;

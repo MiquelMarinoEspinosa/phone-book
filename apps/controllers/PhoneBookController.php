@@ -9,10 +9,15 @@ use Ramsey\Uuid\Uuid;
 
 class PhoneBookController extends Controller
 {
-    public function getAction() {
-        $phoneBook = PhoneBook::find();
-        var_dump(count($phoneBook->toArray()));
-        var_dump($phoneBook->toArray());
+    public function getAction(string $id)
+    {
+        echo "getAction";
+    }
+
+    public function findAction()
+    {
+        echo "findAction\n";
+        echo $this->request->get('page');
     }
 
     public function postAction()
