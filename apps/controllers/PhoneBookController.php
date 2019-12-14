@@ -71,7 +71,7 @@ class PhoneBookController extends Controller
         $phoneBooks = PhoneBook::find($conditions);
         $offset = $this->request->get('offset');
 
-        if($offset !== null) {
+        if($offset !== null && (int) $offset > 0) {
             $this->paginateResults($phoneBooks, $offset);
             return;
         }
