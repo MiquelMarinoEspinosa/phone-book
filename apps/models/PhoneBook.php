@@ -3,6 +3,7 @@
 namespace HostAway\Models;
 
 use HostAway\Services\CountryService;
+use HostAway\Services\TimeZoneService;
 use Phalcon\Mvc\Model;
 
 class PhoneBook extends Model
@@ -112,7 +113,6 @@ class PhoneBook extends Model
         /** @var CountryService $countryService */
         $countryService = $this->getDI()->get('country_service');
         $countyCodes = $countryService->getCountryCodes();
-        var_dump($countyCodes);
         if (!in_array($countryCode, $countyCodes)) {
             throw new \InvalidArgumentException(
                 'The country_code ' . $countryCode . ' does not exist.'
@@ -124,6 +124,16 @@ class PhoneBook extends Model
 
     public function setTimeZone(string $timeZone): void
     {
+        /** @var TimeZoneService $timeZonesService */
+        $timeZonesService = $this->getDI()->get('time_zones_service');
+        $timeZones = $timeZonesService->getTimeZones();
+        var_dump($timeZones);
+        if (!in_array($timeZone, $timeZones)) {
+            throw new \InvalidArgumentException(
+                'The time_zone ' . $timeZone . ' does not exist.'
+                . ' Please check the ' . TimeZoneService::TIME_ZONE_URL . ' to see which countries are valid'
+            );
+        }
         $this->timeZone = $timeZone;
     }
 
