@@ -15,6 +15,9 @@
     - name: PHP | Install zip module
       apt: name=php7.3-zip state=latest force=yes
 
+    - name: PHP | Install zip module
+      apt: name=php-memcached state=latest force=yes
+
     - name: PHP | Copy php-fpm php.ini configuration
       copy:
         src: ../../templates/php/fpm/php.ini

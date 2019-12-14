@@ -10,6 +10,10 @@ use Phalcon\Http\Response;
 use Phalcon\Loader;
 use Phalcon\Mvc\Micro;
 use Phalcon\Mvc\Micro\Collection;
+use Phalcon\Cache\Frontend\Data as FrontData;
+use Phalcon\Cache\Backend\Libmemcached as BackMemCached;
+
+const ONE_HOUR_CACHE = 60 * 60;
 
 function loadResources() {
     $loader = new Loader();
@@ -27,6 +31,26 @@ function loadResources() {
 function buildContainer(): FactoryDefault {
     $container = new FactoryDefault();
 
+    $frontCache = new FrontData(
+        [
+            'lifetime' => ONE_HOUR_CACHE,
+        ]
+    );
+
+    $cache = new BackMemCached(
+        $frontCache,
+        [
+            'servers' => [
+                [
+                    'host'   => '127.0.0.1',
+                    'port'   => '11211',
+                    'weight' => '1',
+                ]
+            ]
+        ]
+    );
+
+
     $container->set(
         'db',
         function () {
@@ -43,18 +67,20 @@ function buildContainer(): FactoryDefault {
 
     $container->set(
         'country_service',
-        function () {
+        function () use ($cache){
             return new CountryService(
-                new Client()
+                new Client(),
+                $cache
             );
         }
     );
 
     $container->set(
         'time_zones_service',
-        function () {
+        function () use ($cache) {
             return new TimeZoneService(
-                new Client()
+                new Client(),
+                $cache
             );
         }
     );
