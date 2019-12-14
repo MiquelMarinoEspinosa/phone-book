@@ -15,8 +15,14 @@
     - name: PHP | Install zip module
       apt: name=php7.3-zip state=latest force=yes
 
-    - name: PHP | Install zip module
+    - name: PHP | Install memcached module
       apt: name=php-memcached state=latest force=yes
+
+    - name: PHP | Install ext-dom module
+      apt: name=php7.3-xml state=latest force=yes
+
+    - name: PHP | Install mbstring module
+      apt: name=php7.3-mbstring state=latest force=yes
 
     - name: PHP | Copy php-fpm php.ini configuration
       copy:
