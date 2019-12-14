@@ -21,7 +21,12 @@ class PhoneBookController extends Controller
 
     public function findAction()
     {
-        $phoneBooks = PhoneBook::find();
+        $conditions = [];
+        $firstName = $this->request->get('first_name');
+        if ($firstName !== null) {
+            $conditions = ['conditions' => 'firstName LIKE "%' . $firstName . '%"'];
+        }
+        $phoneBooks = PhoneBook::find($conditions);
         $this->successResponse($phoneBooks->toArray());
     }
 
