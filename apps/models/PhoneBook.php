@@ -145,4 +145,16 @@ class PhoneBook extends Model
     {
         $this->updatedOn = $updatedOn;
     }
+
+    public function hydrate(array $values): self
+    {
+        $this->setFirstName($values['first_name'] ?? '');
+        $this->setLastName($values['last_name'] ?? '');
+        $this->setPhoneNumber($values['phone_number'] ?? '');
+        $this->setCountryCode($values['country_code'] ?? '');
+        $this->setTimeZone($values['time_zone'] ?? '');
+        $this->setUpdatedOn(date("Y-m-d H:i:s"));
+
+        return $this;
+    }
 }

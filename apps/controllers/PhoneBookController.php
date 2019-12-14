@@ -9,41 +9,15 @@ use Ramsey\Uuid\Uuid;
 
 class PhoneBookController extends Controller
 {
-    public function getAction(string $id)
-    {
-        $phoneBook = PhoneBook::findFirst("id = '" . $id . "'");
-        if ($phoneBook === false) {
-            $this->failResponse(404, 'Phone book not found');
-            return;
-        }
-        $this->successResponse([$phoneBook->toArray()]);
-    }
-
-    public function findAction()
-    {
-        $conditions = [];
-        $firstName = $this->request->get('first_name');
-        if ($firstName !== null) {
-            $conditions = ['conditions' => 'firstName LIKE "%' . $firstName . '%"'];
-        }
-        $phoneBooks = PhoneBook::find($conditions);
-        $this->successResponse($phoneBooks->toArray());
-    }
-
-    public function postAction()
+    public function createAction()
     {
         try {
             $phoneBook = new PhoneBook();
-            $data = $this->request->getJsonRawBody(true);
+            $values = $this->request->getJsonRawBody(true);
+            $phoneBook->hydrate($values);
             $phoneBook->setId(Uuid::uuid4());
-            $phoneBook->setFirstName($data['first_name'] ?? '');
-            $phoneBook->setLastName($data['last_name'] ?? '');
-            $phoneBook->setPhoneNumber($data['phone_number'] ?? '');
-            $phoneBook->setCountryCode($data['country_code'] ?? '');
-            $phoneBook->setTimeZone($data['time_zone'] ?? '');
-            $now = date("Y-m-d H:i:s");
-            $phoneBook->setInsertedOn($now);
-            $phoneBook->setUpdatedOn($now);
+            $phoneBook->setInsertedOn($phoneBook->getUpdatedOn());
+
             $result = $phoneBook->create();
             if ($result === false) {
                 $errorMessage = '';
@@ -61,12 +35,87 @@ class PhoneBookController extends Controller
                 400,
                 $invalidArgumentException->getMessage()
             );
-        } catch (\Exception $exception) {
+        }
+    }
+
+    public function getAction(string $id)
+    {
+        $phoneBook = $this->findById($id);
+        if ($phoneBook === false) {
+            return;
+        }
+        $this->successResponse([$phoneBook->toArray()]);
+    }
+
+    public function findAction()
+    {
+        $conditions = [];
+        $firstName = $this->request->get('first_name');
+        if ($firstName !== null) {
+            $conditions = ['conditions' => 'firstName LIKE "%' . $firstName . '%"'];
+        }
+        $phoneBooks = PhoneBook::find($conditions);
+        $this->successResponse($phoneBooks->toArray());
+    }
+
+    public function updateAction(string $id)
+    {
+        try {
+            /** @var PhoneBook $phoneBook */
+            $phoneBook = $this->findById($id);
+            if ($phoneBook === false) {
+                return;
+            }
+            $values = $this->request->getJsonRawBody(true);
+            $phoneBook->hydrate($values);
+            $result = $phoneBook->save();
+            if ($result === false) {
+                $errorMessage = '';
+                foreach ($phoneBook->getMessages() as $message) {
+                    $errorMessage .= $message;
+                    $errorMessage .= PHP_EOL;
+                }
+                $this->failResponse(500, $errorMessage);
+                return;
+            }
+
+            $this->successResponse([$phoneBook->toArray()]);
+        } catch (\InvalidArgumentException $invalidArgumentException) {
             $this->failResponse(
-                500,
-                $exception->getMessage()
+                400,
+                $invalidArgumentException->getMessage()
             );
         }
+    }
+
+    public function deleteAction(string $id)
+    {
+        $phoneBook = $this->findById($id);
+        if ($phoneBook === false) {
+            return;
+        }
+        $result = $phoneBook->delete();
+        if ($result === false) {
+            $errorMessage = '';
+            foreach ($phoneBook->getMessages() as $message) {
+                $errorMessage .= $message;
+                $errorMessage .= PHP_EOL;
+            }
+            $this->failResponse(500, $errorMessage);
+            return;
+        }
+        $this->successResponse([$phoneBook->toArray()]);
+    }
+
+    private function findById(string $id)
+    {
+        $phoneBook = PhoneBook::findFirst("id = '" . $id . "'");
+        if ($phoneBook === false) {
+            $this->failResponse(404, 'Phone book not found');
+            return;
+        }
+
+        return $phoneBook;
     }
 
     private function successResponse(array $phoneBooks)
