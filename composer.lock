@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e9222c35404aab30a665967cce61fb7b",
+    "content-hash": "36cce8eb3b7b0a125ff49c916983200c",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -196,6 +196,51 @@
             "time": "2019-07-01T23:21:34+00:00"
         },
         {
+            "name": "league/booboo",
+            "version": "2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/booboo.git",
+                "reference": "bf6a7ba3b3cb59cf1acec1e8671474bde5ffe326"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/booboo/zipball/bf6a7ba3b3cb59cf1acec1e8671474bde5ffe326",
+                "reference": "bf6a7ba3b3cb59cf1acec1e8671474bde5ffe326",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0",
+                "psr/log": "~1.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~5.7",
+                "sentry/sentry": "~1.7"
+            },
+            "suggest": {
+                "sentry/sentry": "Use Sentry for passing errors to Sentry."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\BooBoo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brandon Savage",
+                    "homepage": "https://www.brandonsavage.net/"
+                }
+            ],
+            "description": "Provides an error handler for PHP that can execute a stack of handlers for various purposes.",
+            "time": "2017-09-01T17:05:28+00:00"
+        },
+        {
             "name": "paragonie/random_compat",
             "version": "v9.99.99",
             "source": {
@@ -289,6 +334,53 @@
                 "response"
             ],
             "time": "2016-08-06T14:39:51+00:00"
+        },
+        {
+            "name": "psr/log",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/446d54b4cb6bf489fc9d75f55843658e6f25d801",
+                "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "time": "2019-11-01T11:05:21+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

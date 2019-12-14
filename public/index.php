@@ -124,7 +124,15 @@ function errorResponse(\Exception $exception) {
         ->send();
 }
 
+function initLogger() {
+    $jsonFormatter = new League\BooBoo\Formatter\JsonFormatter();
+    $jsonFormatter->setErrorLimit(E_ALL);
+    $booboo = new League\BooBoo\BooBoo([new League\BooBoo\Formatter\JsonFormatter()]);
+    $booboo->register();
+}
+
 loadResources();
+initLogger();
 $app = new Micro();
 $app->setDI(buildContainer());
 $app->mount(createRoutes());
