@@ -132,9 +132,7 @@ class PhoneBook extends Model
     {
         $countryCode = trim($countryCode);
         if ($countryCode === '') {
-            throw new \InvalidArgumentException(
-                'The country_code must not be empty.'
-            );
+            return;
         }
         /** @var CountryService $countryService */
         $countryService = $this->getDI()->get('country_service');
@@ -153,10 +151,9 @@ class PhoneBook extends Model
     {
         $timeZone = trim($timeZone);
         if ($timeZone === '') {
-            throw new \InvalidArgumentException(
-                'The time_zone must not be empty.'
-            );
+            return;
         }
+
         /** @var TimeZoneService $timeZonesService */
         $timeZonesService = $this->getDI()->get('time_zones_service');
         $timeZones = $timeZonesService->getTimeZones();
