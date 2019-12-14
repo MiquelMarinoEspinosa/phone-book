@@ -8,6 +8,8 @@ use Phalcon\Mvc\Model;
 
 class PhoneBook extends Model
 {
+    const PHONE_NUMBER_FORMAT = "/\+12 [0-9]+/";
+
     /**
      * @var string
      */
@@ -95,6 +97,12 @@ class PhoneBook extends Model
 
     public function setFirstName(string $firstName): void
     {
+        $firstName = trim($firstName);
+        if ($firstName === '') {
+            throw new \InvalidArgumentException(
+                'The first_name must not be empty.'
+            );
+        }
         $this->firstName = $firstName;
     }
 
@@ -105,18 +113,37 @@ class PhoneBook extends Model
 
     public function setPhoneNumber(string $phoneNumber): void
     {
+        $phoneNumber = trim($phoneNumber);
+        if ($phoneNumber === '') {
+            throw new \InvalidArgumentException(
+                'The phone_number must not be empty.'
+            );
+        }
+        if (!preg_match(self::PHONE_NUMBER_FORMAT, $phoneNumber)) {
+            throw new \InvalidArgumentException(
+                'The phone_number format is not valid.'
+                . ' The phone_number format should be with +12 prefix and digits. Ie: +12 223'
+            );
+        }
         $this->phoneNumber = $phoneNumber;
     }
 
     public function setCountryCode(string $countryCode): void
     {
+        $countryCode = trim($countryCode);
+        if ($countryCode === '') {
+            throw new \InvalidArgumentException(
+                'The country_code must not be empty.'
+            );
+        }
         /** @var CountryService $countryService */
         $countryService = $this->getDI()->get('country_service');
         $countyCodes = $countryService->getCountryCodes();
         if (!in_array($countryCode, $countyCodes)) {
             throw new \InvalidArgumentException(
                 'The country_code ' . $countryCode . ' does not exist.'
-                . ' Please check the ' . CountryService::COUNTRIES_URL . ' to see which countries are valid'
+                . ' Please check the ' . CountryService::COUNTRIES_URL
+                . ' to see which countries are valid'
             );
         }
         $this->countryCode = $countryCode;
@@ -124,13 +151,20 @@ class PhoneBook extends Model
 
     public function setTimeZone(string $timeZone): void
     {
+        $timeZone = trim($timeZone);
+        if ($timeZone === '') {
+            throw new \InvalidArgumentException(
+                'The time_zone must not be empty.'
+            );
+        }
         /** @var TimeZoneService $timeZonesService */
         $timeZonesService = $this->getDI()->get('time_zones_service');
         $timeZones = $timeZonesService->getTimeZones();
         if (!in_array($timeZone, $timeZones)) {
             throw new \InvalidArgumentException(
                 'The time_zone ' . $timeZone . ' does not exist.'
-                . ' Please check the ' . TimeZoneService::TIME_ZONE_URL . ' to see which countries are valid'
+                . ' Please check the ' . TimeZoneService::TIME_ZONE_URL
+                . ' to see which countries are valid'
             );
         }
         $this->timeZone = $timeZone;
@@ -138,11 +172,23 @@ class PhoneBook extends Model
 
     public function setInsertedOn(string $insertedOn): void
     {
+        $insertedOn = trim($insertedOn);
+        if ($insertedOn === '') {
+            throw new \InvalidArgumentException(
+                'The inserted_on must not be empty.'
+            );
+        }
         $this->insertedOn = $insertedOn;
     }
 
     public function setUpdatedOn(string $updatedOn): void
     {
+        $updatedOn = trim($updatedOn);
+        if ($updatedOn === '') {
+            throw new \InvalidArgumentException(
+                'The updated_on must not be empty.'
+            );
+        }
         $this->updatedOn = $updatedOn;
     }
 
