@@ -52,9 +52,10 @@ class PhoneBookController extends Controller
     public function getAction(string $id)
     {
         $phoneBook = $this->findById($id);
-        if ($phoneBook === false) {
+        if (!$phoneBook) {
             return;
         }
+
         $response = new Response(null, self::HTTP_CODE_OK);
         $response
             ->setJsonContent($this->buildSuccessContent([$phoneBook->toArray()]))
@@ -87,7 +88,7 @@ class PhoneBookController extends Controller
         try {
             /** @var PhoneBook $phoneBook */
             $phoneBook = $this->findById($id);
-            if ($phoneBook === false) {
+            if (!$phoneBook) {
                 return;
             }
             $values = $this->request->getJsonRawBody(true);
@@ -118,7 +119,7 @@ class PhoneBookController extends Controller
     public function deleteAction(string $id)
     {
         $phoneBook = $this->findById($id);
-        if ($phoneBook === false) {
+        if (!$phoneBook) {
             return;
         }
         $result = $phoneBook->delete();
@@ -141,7 +142,7 @@ class PhoneBookController extends Controller
     private function findById(string $id)
     {
         $phoneBook = PhoneBook::findFirst("id = '" . $id . "'");
-        if ($phoneBook === false) {
+        if (!$phoneBook) {
             $this->failResponse(self::HTTP_CODE_NOT_FOUND, 'Phone book not found');
             return;
         }
