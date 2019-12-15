@@ -17,6 +17,12 @@ abstract class UnitTestCase extends PhalconTestCase
         // Load any additional services that might be required during testing
         $di = Di::getDefault();
 
+        $di->set(
+            'modelsManager',
+            new \Phalcon\Mvc\Model\Manager()
+
+        );
+
         // Get any DI components here. If you have a config, be sure to pass it to the parent
 
         $this->setDi($di);

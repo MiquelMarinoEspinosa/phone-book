@@ -26,12 +26,17 @@ $loader->registerDirs(
     ]
 );
 
+$loader->registerNamespaces(
+    [
+        'HostAway\Models'   => "../apps/models/"
+    ]
+);
+
 $loader->register();
 
 $di = new FactoryDefault();
 
 Di::reset();
 
-// Add any needed services to the DI here
 
 Di::setDefault($di);
