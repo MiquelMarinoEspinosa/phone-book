@@ -25,8 +25,8 @@
 - Commands to access to the mysql server
 	vagrant ssh
 	mysql -u hostaway -phostaway
-	USE hostaway
-	SELECT * FROM phone_book
+	USE hostaway;
+	SELECT * FROM phone_book;
 
 - Execute php unit test
 	vagrant ssh
