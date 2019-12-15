@@ -353,3 +353,4 @@ CREATE TABLE IF NOT EXISTS phone_book (
 	- Add integration - acceptance tests using frameworks such as beta
 	- Improve the ansible provision using roles and vars to avoid config duplication
 	- Use .yml files to define the container dependencies and refactor the index.php
+	- Configure the /etc/hosts to bind the vagrant ip address to a domain automatically 
