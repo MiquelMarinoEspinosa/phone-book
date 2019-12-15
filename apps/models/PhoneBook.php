@@ -70,12 +70,12 @@ class PhoneBook extends Model
         return $this->phoneNumber;
     }
 
-    public function getCountryCode(): string
+    public function getCountryCode(): ?string
     {
         return $this->countryCode;
     }
 
-    public function getTimeZone(): string
+    public function getTimeZone(): ?string
     {
         return $this->timeZone;
     }

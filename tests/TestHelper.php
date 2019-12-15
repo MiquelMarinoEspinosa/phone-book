@@ -28,7 +28,8 @@ $loader->registerDirs(
 
 $loader->registerNamespaces(
     [
-        'HostAway\Models'   => "../apps/models/"
+        'HostAway\Models'   => "../apps/models/",
+        'HostAway\Services' => "../apps/services/"
     ]
 );
 
